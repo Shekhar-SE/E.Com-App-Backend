@@ -36,15 +36,14 @@ public class ProductController {
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
 
-            // This is the inter-service communication part!
-            // Create a RestTemplate to call the other service
+            //Inter-service communication part
             RestTemplate restTemplate = new RestTemplate();
 
-            // Call the user-service to get user details
+            //Call the user-service to get user details
             String userUrl = "http://localhost:8081/api/users/" + product.getCreatorId();
             ResponseEntity<Object> userResponse = restTemplate.getForEntity(userUrl, Object.class);
 
-            // Combine the data and return it
+            //Combining the data and returning it
             Map<String, Object> response = new HashMap<>();
             response.put("product", product);
             response.put("creator", userResponse.getBody());
